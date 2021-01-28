@@ -8,7 +8,8 @@
     <option value="3"> TELANGANA</option>
     <option value="4"> TAMILNADU</option>
 </select><br/>
-<!-- based on the state selection district should be displayeds -->
+<!-- based on the state selection district should be displayed -->
+<!-- this is temporary it gets replaced based on the state selection -->
 <div id="districtsDiv">
     District : <select name="district" onclick="checkStateSelection()">
     <option value="0">SELECT STATE</option>
@@ -27,7 +28,7 @@
         var myState = myForm.state;
         if(myState.value == "0")
         {
-            alert("Please slect state first");
+            alert("Please select state first");
             myState.focus();
         }
     }
@@ -35,6 +36,7 @@
     {
         var d1 = "District: <select name='district' " + "onclick='checkStateSelection()'>" + 
         "<option value='0'>SELECT STATE</option>"
+        //remaining options are composing based on state value
         var myForm = document.forms[0];
         var myState = myForm.state;
         if(myState.value == "1")
@@ -61,7 +63,7 @@
             d1 += "<option value='11'>Vellore</option>";
             d1 += "<option value='12'>Koimbatture</option>";
         }
-        d1 += "<select>";
+        d1 += "</select>";
         document.getElementById("districtsDiv").innerHTML = d1;
     }
 </script>
