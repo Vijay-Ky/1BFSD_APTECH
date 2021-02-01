@@ -1,0 +1,21 @@
+<!-- recommended to write all tags in lower case.
+<web-app> is the root tag. in the body of the root tag keep servlet tag-->
+<web-app>
+	
+	<servlet>
+		<!--for the lengthy class name we are giving aliasing name-->
+		<!--whitespaces are allowed before and after the identifier(s1)-->
+		<servlet-name>s1</servlet-name>
+		<servlet-class>com.aptech.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<!--now we dont have to mention the servlet name just mention s1  bcz of mapping-->
+		<servlet-name>s1</servlet-name>
+		<!--url pattern content should be starting with '/' followe by any identifier -->
+		<!--now hello servlet is assigned to s1-->
+		<!--now HelloServlet can be refered from s1-->
+		<!--s1 is mapping to one url called hello-->
+		<!--same s1 can be mapped to any no. of urls-->
+		<url-pattern>/hello</url-pattern>
+	</servlet-mapping>
+</web-app>

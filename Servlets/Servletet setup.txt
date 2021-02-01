@@ -1,0 +1,34 @@
+http://tomcat.apache.org/
+http://localhost:9090
+
+
+D:\Developmentsoftwares\Tomcat9\webapps 
+in the above folder only we have to develop
+we have to develop all web applications
+1st - create app1 folder (also called project folder)
+
+- we can develop html,css,javascript files in app1 folder
+- even jsp file also in the same location
+
+- develop test1.html in the app1
+- http://localhost:9090/app1/test1.html
+
+-how to develop servlet
+we require additional directory structure.
+- inside app1 create onother folder called WEB-INF every character in the upper case
+- in the WEB-INF folder create a classes folder this should be same name and create
+src folder this can be with any name its for java files.
+-create deployment descriptor its XML file in the WEB-INF level
+
+- write java program
+D:\Developmentsoftwares\Tomcat9\webapps\app1\WEB-INF\src>javac -d ../classes com/aptech/*.java
+-we need describe in the deployment descriptor
+
+-after web.xml develoment restart the server
+
+http://localhost:9090/app1/hello
+
+- to identify the mistake in web.xml just press cntr + b it will show full structure if it is proper
+
+
+
