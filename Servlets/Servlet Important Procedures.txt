@@ -31,4 +31,37 @@ http://localhost:9090/app1/hello
 - to identify the mistake in web.xml just press cntr + b it will show full structure if it is proper
 
 
+http://localhost:9090/app1/s2
+http://localhost:9090/app1/Servlet2
+http://localhost:9090/app1/xyz
+http://localhost:9090/app1/abc
+
+-supplying values through query string.
+-after ? any no. of input parameters.
+- '&' is the seperator between the inputs
+http://localhost:9090/app1/abc?param1="Hello"&firstName="vijay"
+
+- we can make a call to the servlet from html also
+
+- we dont need to restart the server if we just develop and call servlet from html.
+
+http://localhost:9090/app1/test2.html
+
+- all html files should be in the project folder.
+
+
+http://localhost:9090/app1/test3.html
+
+
+- use PrintWriter to write back anything to the browser through SOP we cant
+
+- to find out where this messages are printing come to 
+ tomcat9->logs-> 
+                 we can see the stdouts day wise it is creating
+
+
+
+
+
+
 
