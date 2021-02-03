@@ -59,6 +59,34 @@ http://localhost:9090/app1/test3.html
  tomcat9->logs-> 
                  we can see the stdouts day wise it is creating
 
+- tomcat is a server that only requires class files not the java files.
+
+
+-------------------------------------------
+
+http://localhost:9090/app2/test1.html
+
+
+-without developing servlet, in the html if you give and submit you get 404 error 
+
+-after html,css,javascript client side dev is done
+
+<html>
+<link type="text/css" rel="stylesheet" href="styles.css">
+<script src="validate.js"></script>
+
+<h1> Hello to all </h1> 
+<img src="coding-horror.png" width="720" height="200"> <br/>
+
+<form action="s1">
+	First Name : <input type="text" name="firstName"/> <br/>
+	Last Name : <input type="text" name="lastName"/> <br/>
+	<input type="submit" value="submit" onclick="return validateMyForm()"/>
+</form>
+</html>
+
+
+
 
 
 
