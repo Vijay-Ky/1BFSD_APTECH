@@ -97,9 +97,67 @@ http://localhost:9090/app2/test1.html
 
 ------------------development with eclipse---------------
 1.we need javaee eclipse for this
-2.
+2. we need j2ee edition
+3. we can develop dynamic web application 
+4. before creating dynamic web app check if tom cat running outside or not
+5. create a new dynamic web project
+- eclipse doesnt have any target runtime environments- no tomcat,jre, database
+- chosse run time envronemnt- tomcat 9
+- if you dont get those lists then its not jee eclipse.
+-choose the folder name of tomcat installation
+-select dynamic web module version to 2.5
+- till now we have developed module version of 2.5
+-eclipse is using different directory structure for dynamic web application
+its eclipse specific,
+- every java program(any java pgm, servlet also)
+  you should develop inside the java resources->src folder 
+-under web content only we should develop, html, css, js, image, jsp files
+-inside webcontent->web-inf->lib we need to place all third party
+ jar files, we dont update build-path.
+- inside eclipse build path is only for core java projects
+- for all web apps we need to copy explicitely jar files into the lib
+  folder.
+-in the web-inf we have web.xml by default design view click source
+-diplay-name tag is providing a name to display
+-welcome-file-list - we are getting a readymade web.xml file.
+-this directory structure is specific to eclipse not universal.
+- previous development without eclipse, that is universal directory 
+  structure for web app development.
+-every j2ee complient servers expecting the directory structure like 
+ this not eclipse structure.
+-develop html file in web-content folder
+- just run with some content of html directly, no need of 
+configuring tomcat once again.
+-html, js, css, image, and jsp should be inside the web-content folder.
+-now develop simple servlet inside servlet
+Servlet1 with package com.aptech
+- click next it shows url mapping as /Servlet1
+-eclipse chooses class name itself as URL pattern
+-then uncheck dopost and doget. check service
+- in the web.xml you will get optional tags
+<description></description>
+    <display-name>Servlet1</display-name>
+-just keep these two statements inside the service method
+PrintWriter out = response.getWriter();
+		out.println("Hello to all from Servlet1");
+-just run. no need of restarting the server.
+-we dont require to mention the port number to call servlet in browser.
+just run
+- develop Servlet2 and html file and call the servelet from html
+just run the html file and click the link
+- develop another html file with simple form copy the action value and
+develop Servlet3
+- not url-mapping should not be the default one select edit and 
+paste that url-pattern 
+-override(check) only service method and uncheck doget, dopost
+-come to html and run the file, by restarting the tomcat
+you get empty form with submit just click submit you get the servlet call o/p
 
-
+-now we will develop the servlet which interacts with the db
+-creating another project
+-target runtime you dont have to configure once again
+ - target runtime will be configured only once in the workspace
+  - dynamic web module version keep 2.5 only
 
 
 
