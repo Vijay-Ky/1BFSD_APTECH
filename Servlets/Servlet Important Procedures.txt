@@ -161,3 +161,22 @@ you get empty form with submit just click submit you get the servlet call o/p
 
 
 
+
+-------------------Input to servlets----------------
+----reading the data from the browser-------------
+1. form data
+- String[] firstName = request.getParameterValues("firstName"); this method return the string
+array
+
+- make changes in the reg2.html
+now its multiselection drop down
+<select name="education" multiple>
+
+
+- if in the form method= 'post' then query string will not be generating, returns null
+-query string will not be generarating while form is submitting through post will get NPE 500 
+  error internal server error
+
+
+
+
