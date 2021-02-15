@@ -177,6 +177,69 @@ now its multiselection drop down
 -query string will not be generarating while form is submitting through post will get NPE 500 
   error internal server error
 
+-------------constants
+- not only we can read form data in the servlet but we can read constants also 
+
+-configuring constants to entire application
+
+--------------servlet life cycle-------------
+-for the first request object will be created with no-arg constructor.
+-then init method and service method
+-every time you refresh the browser that is the next request and we get service method 
+-for the first request only constructor,init,servlet9.service then only servlet9.service for
+every another request.
+-go to the servers tab and right click and select stop then you will see destroy method executes
+-service method only responsible for serving the customer request.
+-in every servlet there should be no-arg constructor. otherwise we get error
+500 internal server error, instantiation exception
+-while manually starting the server object wont be created, while making the first request then
+the servlet object is creating. this is reffrred to as lazy loading.
+-we can create the object initially by manual by keeping <load-on-startup>1</load-on-startup>
+in <servlet> tag.
+-number on load-on-startup says the order which one should execute first.
+-we should not give the number as 0 or same number bcz server will execute it randomly.
+
+-----architecture---------
+servlet-api.jar
+-------------
+1.javax.servlet.*
+2.javax.servlet.http.*
+
+
+1. javax.servlet.*
+------------------------
+   1.Servlet
+   2.ServletConfig
+   3.ServletContext
+   4.ServletRequest
+   5.ServletResponse
+   6.GenericServlet
+   7.RequestDispatcher
+
+2. javax.servlet.http.*
+-------------------------
+   1.HttpServlet
+   2.HttpServletRequest
+   3.HttpServletResponse
+   4.HttpSession
+   5.Cookie
+
+---------DoGet and DoPost----------
+- just develop the DoGet in the servlet
+now we are making the call to servlet through Get
+-server calls service method only but we didnt override service method 
+when sever calls service method it will read method type if method type is get 
+it will call DoGet method
+
+-suppose we only overrided doPost directly making a call to servlet through browser
+if we didnt override the doget we get error by default it will call doget.
+
+-always advisable to develop servlet by using doGet and doPost
+
+-one is returning form to the customer and second receiving form from the customer.
+-getting filled form from the customer doGet method composing the form and returning the form
+to the customer.
+-doPost method receving filled form from the customer and processing that data.
 
 
 
