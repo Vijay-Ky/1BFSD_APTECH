@@ -243,3 +243,184 @@ to the customer.
 
 
 
+---------------Init Methods-----------------------------
+Servlet is an interface
+-Generic servlet is an abstract class
+-Http servlet is also an abstract class
+-Then we are developing our HelloServlet
+-Servlet contains life-cycle methods
+  1.init()
+  2.service()
+  3.destroy()
+  - These are inheriting to GenericServlet
+  - in the GenericServlet init method and destroy methods got implemented
+    but not service method.
+  - service method leaving to the protocol specific classes like HttpServlet
+  - in the HttpsServlet service method got implemented by considering
+    http protocol methods like get and post. 
+    for get they develped doGet method and post they developed doPost method
+- in the servlet interface there is an argument init method that is inheriting
+  to GenericServlet. in the GenericServlet init method got implemented.
+  this is how init method got implemented.(see word doc)
+
+
+- in the GenericServlet there is an attribute of ServletConfig type
+  -same getting initialized through argument init method
+  -argument init method taking argument as a Servletconfig
+  -same is initializing to the global attribute.
+  -at last it is calling no-arg init method.
+  -it is newly incorporated method in the GenericServlet
+
+- all most all the methods of GenericServlet are using global attribute config
+
+- if argument init method not executed then config will be null
+  while calling return config.geInitParameter(name); you will get NullPointerException
+ - this config is used in all the remaining methods of GenericServlet
+
+-argument init method from the GenericServlet should execute at any cost
+ bcz argument init method initializing global attribute, because that global
+ attribute is used in almost all the methods of GenericServlet. if it is not
+ initialized then we get NullPointerException
+
+-Same argument init method is inheriting to HttpServlet
+ in the HttpServlet it is not overrided and same gets inherited to our 
+ HelloServlet. 
+ - In the HelloServlet we should not override argument init method
+   if we are overriding argument init method then GenericServlet attribute 
+   will not be initalizing. if it is not initialized then the methods got 
+   iniherited from GenericServlet to HelloServlet those cant be used.
+   if we try to use them we get NullPointerException.
+-server will call by default init method of GenericServlet in the HelloServlet
+
+
+------demonstration----
+-develop a servlet and override init method and doGet method
+-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String s1 = getInitParameter("");
+		System.out.println("done");
+	}
+-you get NullPointerException
+- just comment the argument init method
+-or keep super.init(config)
+
+public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+	}
+--Interview question why do we use super.init(config) while overriding init method
+
+
+-only one time init method is executing
+
+- so instead of inheriting arg-init method just override no-arg init method
+ this is the best way.
+ public void init() throws ServletException {
+		System.out.println("init()");
+	}
+- server will always call arg-init method not no-arg init method.
+
+- two things here initializing servlet arhitecture(hierarchy)
+  in the GenericServlet there are so many methods which are using config
+  that config should be initalized. we can call it as API initialization
+
+- Server is supplying servlet config to the init method that servlet config
+  is used by several method of GenericServlet.
+  whaterver object sending by the server that should be assigned to global
+  attribute of GenericServlet. then most of the built-in methods works properly.
+  most of the methods are depending on the object which is sending by the server.
+  sever knows about every information about our servlet context.
+  once that got initialized then only we should look for application 
+  specific initialization.
+
+two types of initialization
+1. default or built-in initialization.
+2. then application specific initialization.
+
+conclusion: here dont override argumet-init method if you did without fail 
+you should keep super.init(config) otherwise NullPointerException
+-instead of that go for no-arg method
+-server wont call no-arg init method straight-away
+ server first calls arg init method by supplying ServletConfig object to argument
+ init method.
+
+
+-for every servlet server sending ServletConfig object.
+ its like one to one for one servlet one ServletConfig object will be supplied by the server.
+ that ServletConfig will be having all run-time parameters including 
+ server run-time environment.
+-server responsible to ServletConfig object to servlet object through arg-init method
+ as soon as servlet execution got over immediately init method calling by the server
+-server sending servlet-config object to init method
+
+- ServletConfig object will be containing servlet specific information.
+- ServletConfig object not only contains servlet specific information
+ it is also containing server information.
+ - server responsibility to send a server information and servlet specific 
+ information to a particular servlet.
+- for a servlet while calling init method it is supplying servlet config object
+- in the ServletConfig object it is incorporating ServletContext object also
+  ServletContext object is global to entire application.
+  ServletContext object containing server information and global information	
+  for our application.
+-ServletContext is a global object which is available in entire application.
+for one application one ServletContext object. that servlet context object
+contains application information and even server information.
+whenerver server sending servlet config object to a servlet it is incorporating
+servlet specific information and also reference of the ServletContext.
+
+- every ServletConfig object having reference of ServletContext but for 
+entire application only one ServletContext.
+-wrt servlet config it is specific to a servlet. for every servlet
+one servlet config object but for entire application one servlet context object
+
+-------interviewer will ask difference b/w servlet config and servlet context--------
+
+- first constructor and init method will be called then after we are calling argument init method
+- we can directly initialize in the constrctor instead of the argument init method
+then why do we need this argument init method.
+- init method is a callback method, automatically server is calling
+  through init method only. servlet is getting the main information about run-time context
+  where this servlet object is running that information is getting through
+  servlet config object. that servlet config object is sending to the init method
+  we are not calling init method. server only calling init method. we are
+  not calling constructor, server only creating object. at the time of object
+  creating constructor is executing but by the time of executing constructor
+  servlet doesnt have run-time information even servlet specific configuration.
+  first object is creating then only init method is calling while creating an
+  object it doesnt have servlet config object, after object creation then
+  calling init method. 
+  so inside a constructor body we cant use getInitParamter() we get NullPointerException
+  bcz by the time of creating an object constructor is executing by the time
+  GenericServlet config is null only.
+  in the constructor body you cant use any inherited methods.
+  we can use inherited methods once GenericServlet config got initialized.
+  that is getting initialized through argument constructor. after argument
+  constructor use the no-arg constructor. if we are implementing anything
+  in the no-arg constructor that is executing after argument init method.
+  initialize in the no-arg init method that no-arg init method is executing
+  after argument init method GenricServlet config gets initialized.
+  by the time of executing servlet constructor GenericServlet config is the 
+  null we cant use any inherited methods but by the time of calling no-arg
+  init method GenericServlet config got initialized. then we can use every
+  inherited method
+
+- in the servlet architecture init methods are specificaly designed in order to 
+initialize some built-in execution then only we can go for our application
+specific initialization.
+in the servlets developement we will not be using no-arg constructor at-all
+in order to initialize. go for no-arg init method, we can also go for 
+argument init method but we need to keep super.init(config).
+the best way is to initialize application specific initialization in the
+servlets developement no-arg init method. not the constructor body not even
+argument init method. compare to constructor body argument init method is more suitable
+just we need to keep super.init(config) statment.
+so dont use constructors at all in case of web application developements.
+- that is why in the servlet if we develop constructor overloading we wont
+be using that.
+- we can develop any no. of constructors but server only using no-arg constructor
+we are not creating object to the servlet. if we create we can use any constructor.
+but server only creating the object. while server is creating the object
+it is using no-arg constructor.
+- so please ensure every time servlet should have a no-arg constructor.
+if not we will be getting an exception why bcz server creating an object
+to servlet class by using no-arg constructor only. if that is not available
+then we get runtime exception.
