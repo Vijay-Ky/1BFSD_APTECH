@@ -511,3 +511,37 @@ then we get runtime exception.
 1. request dispatcher it is only within the web application
 but in case of send redirect in across the web applications of the same server.but another application also
 should run in the same server.
+
+
+----------------Session Management------------------
+--what is the need-----------------------------
+-any type of web application requires session management.
+-no matter which technology we are using to develop our web application.
+-because we are using HTTP protocol it is stateless protocol so we require a managin session
+ explicitely.
+
+
+ -first form data data not visible to the second form
+
+ -to maintain user session explicitely there are 4 approaches available
+ 1. hidden form fields
+ 2. url rewriting
+ 3. cookies
+ 4. HttpSession
+
+ ------------hidden form fields-----------------------
+ -programmer maintaining session management through hidden field
+
+
+  ------------url rewriting-----------------------
+  through querystring we are sending data whatever required.
+  when you are supplying query string method should be post
+
+
+  when we use get it generates query string
+
+
+  -------------------cookies------------------------
+  -cookie is a small piece of information.
+  -implementing session management using cookies.
+  -cookie is an object which is created by server and maintained by browser.
