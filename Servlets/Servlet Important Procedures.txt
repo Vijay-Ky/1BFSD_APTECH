@@ -424,3 +424,90 @@ it is using no-arg constructor.
 if not we will be getting an exception why bcz server creating an object
 to servlet class by using no-arg constructor only. if that is not available
 then we get runtime exception.
+
+
+---------------------DISPATCHING-------------
+-----REQUEST DISPATCHER-----------
+- It is an interface. available in javax.servlet package.
+  if any member is available in javax.servlet package it is protocol independent.
+  it is not depending on any protocol. its same in every protocol.
+
+- in this interface there are two methods available.(two ways of using request dispatcher)
+  forward
+  include
+ 
+- by using request dispatcher we can forward a request or we can include
+  target resource output
+  
+
+  demonstration
+  three things
+  only servlet1 not servlet 2 in the address bar
+  1. browser address bar http://localhost:9090/app11/Servlet1?firstName=abc&lastName=xyz
+  2. in the browser body only servlet2 content not the servlet1 content
+  3. console o/p
+
+
+  process
+  1. brower making a request to servlet1 by submitting a form with firstName and lastName
+  2. inside servlet1 we are reading firstName, lastName, then composed fullName then
+     we are storing that fullName inside the request object. then we are using request
+     dispatcher to dispatch current request to servlet2.
+  3. servlet2 not forwarding this. after execution of servlet2 it is sending
+     response back to servlet1
+ 4. then inside servlet1 whaterver remaining content is there those will be executing.
+    then sending a response back to browser.
+ Note: in the browser address bar only servlet1 is visible why because
+       browser made a call to servlet1 only. servlet1 internally made a 
+       call to servlet2.
+       http://localhost:9090/app10/Servlet1?firstName=abc&lastName=xyz
+       browser dosnt know about this.
+
+ - inside servlet1 we used forward technic then in the servlet2 last 
+   resource out.println message only sending back to the browser.
+   whenever we use forward
+- whenever we use forward only last resource out.println is sending back to 
+  the browser.
+- it is maily used for role based development
+  ex: servlet1 is performing business logic and servlet2 performing presentation logic
+
+- inside servlet2 we can read form data as a parameter we can read
+   results as a attribute. because of same request object is going to servlet2
+   inside that object first name is there in the form of parameter.last name
+   is there in the form of parameter, and results is fullname results is there
+   in the form of attribute. that also available in the servlet2
+
+ - instead of developing business and presentation logic in the same 
+   servlet we can divide into 2.
+
+ - by using request dispatcher we can dispatch to any other servlet or any
+   other html file. we can also dispatch to any jsp.
+
+
+- while using rd.include(r,r) we get both servlet out.println message
+   including servlet2 output in the servlet1 output
+   - whaterver output is composed by servlet 2 the same including in the servlet1
+   -depending on the requirement we can go for either forward or include.
+- its like inline develpment servlet2 is acting as a inline of servlet1
+- now servlet2 can reused in any other servlet wherever servlet2 services
+  is required
+
+
+  forward- rollbased development
+  include - inline or reusability
+
+
+-RequestDispatcher is a server side technic bcz browser doent know about the dispatching
+
+
+
+---------SendRedirect-----------
+1.similar to request dispacther there is an another technic
+
+
+
+
+-------------
+1. request dispatcher it is only within the web application
+but in case of send redirect in across the web applications of the same server.but another application also
+should run in the same server.
