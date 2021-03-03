@@ -545,3 +545,103 @@ should run in the same server.
   -cookie is a small piece of information.
   -implementing session management using cookies.
   -cookie is an object which is created by server and maintained by browser.
+
+
+HttpSession
+---------------------------
+1. by default it is working based on cookies.
+
+
+--------------
+1.Servlet runs in the tom cat container.
+2.Tomcat takes care of creating objects and intializing.
+3.Takes care of creating request and response object also.
+4.every class is provided by tomcat
+----------------------------
+
+HTTP Session 
+--------------------
+-The HttpSession object is used for session management.
+A session contains information specific to a particular user 
+across the whole application. When a user enters into a website 
+(or an online application) for the first time HttpSession is obtained
+via request.getSession(), the user is given a unique ID to identify 
+his session. This unique ID can be stored into a cookie or in a request parameter.
+
+-The HttpSession stays alive until it has not been used for more than 
+the timeout value specified in tag in deployment descriptor file( web.xml).
+The default timeout value is 30 minutes, this is used if you don’t specify
+the value in tag. This means that when the user doesn’t visit web application
+time specified, the session is destroyed by servlet container. The subsequent
+request will not be served from this session anymore, the servlet container 
+will create a new session.
+
+
+This is how you create a HttpSession object.
+
+protected void doPost(HttpServletRequest req,
+    HttpServletResponse res)
+    throws ServletException, IOException {
+        HttpSession session = req.getSession();
+}
+
+
+You can store the user information into the session object by using 
+setAttribute() method and later when needed this information can be
+fetched from the session. This is how you store info in session. Here
+we are storing username, emailid and userage in session with the attribute
+name uName, uemailId and uAge respectively.
+
+
+session.setAttribute("uName", "vijay");
+session.setAttribute("uemailId", "myemailid@gmail.com");
+session.setAttribute("uAge", "20");
+This First parameter is the attribute name and second is the attribute value.
+For e.g. uName is the attribute name and vijay is the attribute 
+value in the code above.
+
+
+TO get the value from session we use the getAttribute() method of HttpSession interface. Here we are fetching the attribute values using attribute names.
+
+String userName = (String) session.getAttribute("uName");
+String userEmailId = (String) session.getAttribute("uemailId");
+String userAge = (String) session.getAttribute("uAge");
+
+
+Methods of HttpSession
+public void setAttribute(String name, Object value): Binds the object with a name and stores the name/value pair as an attribute of the HttpSession object. If an attribute already exists, then this method replaces the existing attributes.
+
+public Object getAttribute(String name): Returns the String object specified in the parameter, from the session object. If no object is found for the specified attribute, then the getAttribute() method returns null.
+
+public Enumeration getAttributeNames(): Returns an Enumeration that contains the name of all the objects that are bound as attributes to the session object.
+
+public void removeAttribute(String name): Removes the given attribute from session.
+
+setMaxInactiveInterval(int interval): Sets the session inactivity time in seconds. This is the time in seconds that specifies how long a sessions remains active since last request received from client.
+
+
+getSession
+HttpSession getSession(boolean create)
+Returns the current HttpSession associated with this request or, if there is no current session and create is true, returns a new session.
+If create is false and the request has no valid HttpSession, this method returns null.
+
+To make sure the session is properly maintained, you must call this method before the response is committed. If the container is using cookies to maintain session integrity and is asked to create a new session when the response is committed, an IllegalStateException is thrown.
+
+Parameters:
+create - true to create a new session for this request if necessary; false to return null if there's no current session
+Returns:
+the HttpSession associated with this request or null if create is false and the request has no valid session
+
+Filters
+-------------------
+1. filters are for pre-execution or post-execution or both.
+2. before calling servlet if something needs to be executed or
+   after calling servlet if something needs to be executed or both.
+   then we can assign a filter to servlet.
+    * for the filters also no-arg constructor is mandatory.
+     * server is creating object to filter by using reflection-api. 
+     * every filter is having auto-load on startup.
+   - same filter can be assigned to any no. of servlets 
+   - filter can be mapped to any web resource.Servlet,JSP,HTML
+   -for the same resource any no.of filters can be assigned.
+  
