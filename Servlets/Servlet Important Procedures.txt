@@ -644,4 +644,253 @@ Filters
    - same filter can be assigned to any no. of servlets 
    - filter can be mapped to any web resource.Servlet,JSP,HTML
    -for the same resource any no.of filters can be assigned.
+
+dispatcher types
+---------------------------
+- for filter also we can configure constants.
+- we can also read application specific constants.
+
+Backup programs
+-----------------------
+filter1
+----
+package com.aptech;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+/**
+ * Servlet Filter implementation class Filter1
+ */
+public class Filter1 implements Filter {
+	
+	private FilterConfig config;
+
+    /**
+     * Default constructor. 
+     */
+    public Filter1() {
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see Filter#destroy()
+	 */
+	public void destroy() {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		String s1 = config.getInitParameter("Con1");
+		String s2 = config.getInitParameter("Country");
+		
+		//reading application specific parameters
+		ServletContext context = config.getServletContext();
+		String s3 = context.getInitParameter("p1");
+		String s4 = context.getInitParameter("url");
+		
+		PrintWriter out = response.getWriter();
+		
+		//filter specific constants
+		out.println("from filter1: " + s1 + "<br/>");
+		out.println("from filter1: " + s2 + "<br/>");
+		
+		//application specific constants
+		out.println("from filter1: " + s3 + "<br/>");
+		out.println("from filter1: " + s4 + "<br/>");
+		
+		chain.doFilter(request, response);
+	}
+
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
+	public void init(FilterConfig fConfig) throws ServletException {
+		config = fConfig;
+	}
+
+}
+
+----------------
+servlet1
+------
+package com.aptech;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet1
+ */
+public class Servlet1 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Servlet1() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			String s1 = null;
+			int i = s1.length();
+			System.out.println(s1);
+	}
+}
+
+Servlet2
+--------------------
+package com.aptech;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet2
+ */
+public class Servlet2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Servlet2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("some message");
+	}
+
+}
+-----------------
+web.xml
+----------
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>FilterDispatcherTypes</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Servlet1</display-name>
+    <servlet-name>Servlet1</servlet-name>
+    <servlet-class>com.aptech.Servlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Servlet1</servlet-name>
+    <url-pattern>/Servlet1</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Servlet2</display-name>
+    <servlet-name>Servlet2</servlet-name>
+    <servlet-class>com.aptech.Servlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Servlet2</servlet-name>
+    <url-pattern>/Servlet2</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>Filter1</display-name>
+    <filter-name>Filter1</filter-name>
+    <filter-class>com.aptech.Filter1</filter-class>
+    <init-param>
+      <description></description>
+      <param-name>Con1</param-name>
+      <param-value>Driver</param-value>
+    </init-param>
+    <init-param>
+      <description></description>
+      <param-name>Country</param-name>
+      <param-value>India</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>Filter1</filter-name>
+    <servlet-name>Servlet1</servlet-name>
+  </filter-mapping>
+  <context-param>
+    <param-name>p1</param-name>
+    <param-value>test</param-value>
+  </context-param>
+  <context-param>
+    <param-name>url</param-name>
+    <param-value>oracleUrl</param-value>
+  </context-param>
   
+  <error-page>
+  <exception-type>java.lang.NullPointerException</exception-type>
+  <location>/Servlet2</location>
+  </error-page>
+</web-app>
+  
+  -----------------------
+  //pre
+		System.out.println("Filter1-doFilter started");
+		PrintWriter out = response.getWriter();
+		out.println("Filter1-doFilter started<br/>");
+		
+		chain.doFilter(request, response);
+		
+		//post
+		System.out.println("Filter1-doFilter end");
+		out.println("Filter1-doFilter end<br/>");
+
+
+----------------------------------------
+System.out.println("from Servlet1");
+PrintWriter out = response.getWriter();
+out.println("from Servlet1<br/>");
+------------------------------------------------
+FilterDispatcherTypes
+part1 - Reading filter specific constants
+part2 - Reading application specific constants
+part3 - Assigning one servlet to every NullPointerException
+-use the external browser for getting message
+-default dispatcher type is a request. still we can choose request
+part4 - ERROR dispatcher type
+-filter mapped to servlet2. only mapped for only ERROR requests of servlet2
+part5 - FORWARD dispatcher type
+we are making, whenever FORWARD to servlet2 from other servlet filter will execute.	
+part6 - INCLUDE dispatcher type
+we are making, whenever INCLUDE to servlet2 from other servlet filter will execute.	
+if you give a call to servlet2 straightaway filter wont execute.
+give call from servlet1 you get filter output. 
